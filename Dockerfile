@@ -9,7 +9,7 @@ COPY pom.xml .
 COPY src ./src
 
 # Build the application, skipping tests to speed up build
-RUN mvn clean package
+RUN mvn clean package -DskipTests
 
 # Stage 2: Run the jar using minimal JDK 21 image
 FROM openjdk:21-jdk-slim
