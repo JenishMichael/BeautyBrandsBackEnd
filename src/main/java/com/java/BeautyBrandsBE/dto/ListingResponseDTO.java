@@ -15,13 +15,13 @@ public class ListingResponseDTO {
     private String website;
     private Boolean listingActive;
 
-    private Set<Long> categoryIds;
-    private Set<Long> subCategoryIds;
+    private Set<CategoryResponseDTO> categories;
+    private Set<SubCategoryResponseDTO> subCategories;
 
     public ListingResponseDTO() {
     }
 
-    public ListingResponseDTO(Long listingId, String listingTitle, String description, String address, String city, String contactNumber, String whatsappNumber, String email, String imageUrl, String website, Boolean listingActive, Set<Long> categoryIds, Set<Long> subCategoryIds) {
+    public ListingResponseDTO(Long listingId, String listingTitle, String description, String address, String city, String contactNumber, String whatsappNumber, String email, String imageUrl, String website, Boolean listingActive, Set<CategoryResponseDTO> categories, Set<SubCategoryResponseDTO> subCategories) {
         this.listingId = listingId;
         this.listingTitle = listingTitle;
         this.description = description;
@@ -33,11 +33,9 @@ public class ListingResponseDTO {
         this.imageUrl = imageUrl;
         this.website = website;
         this.listingActive = listingActive;
-        this.categoryIds = categoryIds;
-        this.subCategoryIds = subCategoryIds;
+        this.categories = categories;
+        this.subCategories = subCategories;
     }
-
-    // Getters and Setters
 
     public Long getListingId() {
         return listingId;
@@ -127,20 +125,20 @@ public class ListingResponseDTO {
         this.listingActive = listingActive;
     }
 
-    public Set<Long> getCategoryIds() {
-        return categoryIds;
+    public Set<CategoryResponseDTO> getCategories() {
+        return categories;
     }
 
-    public void setCategoryIds(Set<Long> categoryIds) {
-        this.categoryIds = categoryIds;
+    public void setCategories(Set<CategoryResponseDTO> categories) {
+        this.categories = categories;
     }
 
-    public Set<Long> getSubCategoryIds() {
-        return subCategoryIds;
+    public Set<SubCategoryResponseDTO> getSubCategories() {
+        return subCategories;
     }
 
-    public void setSubCategoryIds(Set<Long> subCategoryIds) {
-        this.subCategoryIds = subCategoryIds;
+    public void setSubCategories(Set<SubCategoryResponseDTO> subCategories) {
+        this.subCategories = subCategories;
     }
 
     @Override
@@ -157,8 +155,8 @@ public class ListingResponseDTO {
                 ", imageUrl='" + imageUrl + '\'' +
                 ", website='" + website + '\'' +
                 ", listingActive=" + listingActive +
-                ", categoryIds=" + categoryIds +
-                ", subCategoryIds=" + subCategoryIds +
+                ", categories=" + categories +
+                ", subCategories=" + subCategories +
                 '}';
     }
 }

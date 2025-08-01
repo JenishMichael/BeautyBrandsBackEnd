@@ -58,6 +58,8 @@
 
 package com.java.BeautyBrandsBE.mapper;
 
+import com.java.BeautyBrandsBE.dto.CategoryResponseDTO;
+import com.java.BeautyBrandsBE.dto.SubCategoryResponseDTO;
 import com.java.BeautyBrandsBE.dto.ListingRequestDTO;
 import com.java.BeautyBrandsBE.dto.ListingResponseDTO;
 import com.java.BeautyBrandsBE.model.Category;
@@ -69,7 +71,6 @@ import java.util.stream.Collectors;
 
 public class ListingMapper {
 
-    // Convert RequestDTO to Entity
     public static Listing toEntity(ListingRequestDTO dto, Set<Category> categories, Set<SubCategory> subCategories) {
         Listing listing = new Listing();
         listing.setListingTitle(dto.getListingTitle());
@@ -87,16 +88,24 @@ public class ListingMapper {
         return listing;
     }
 
-    // Convert Entity to ResponseDTO
     public static ListingResponseDTO toResponseDTO(Listing listing) {
-        Set<Long> categoryIds = listing.getCategories()
-                .stream()
-                .map(Category::getCategoryId)
+        Set<CategoryResponseDTO> categoryDTOs = listing.getCategories().stream()
+                .map(cat -> new CategoryResponseDTO(
+                        cat.getCategoryId(),
+                        cat.getCategoryName(),
+                        cat.getCategoryIconUrl(),
+                        cat.getCategoryActive()
+                ))
                 .collect(Collectors.toSet());
 
-        Set<Long> subCategoryIds = listing.getSubCategories()
-                .stream()
-                .map(SubCategory::getSubCategoryId)
+        Set<SubCategoryResponseDTO> subCategoryDTOs = listing.getSubCategories().stream()
+                .map(sub -> new SubCategoryResponseDTO(
+                        sub.getSubCategoryId(),
+                        sub.getSubCategoryName(),
+                        sub.getSubCategoryIconUrl(),
+                        sub.getSubCategoryActive(),
+                        sub.getCategory().getCategoryId()
+                ))
                 .collect(Collectors.toSet());
 
         return new ListingResponseDTO(
@@ -111,10 +120,8 @@ public class ListingMapper {
                 listing.getImageUrl(),
                 listing.getWebsite(),
                 listing.getListingActive(),
-                categoryIds,
-                subCategoryIds
+                categoryDTOs,
+                subCategoryDTOs
         );
     }
 }
-
-
