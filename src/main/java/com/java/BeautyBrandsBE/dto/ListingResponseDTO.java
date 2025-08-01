@@ -1,5 +1,7 @@
 package com.java.BeautyBrandsBE.dto;
 
+import java.util.Set;
+
 public class ListingResponseDTO {
     private Long listingId;
     private String listingTitle;
@@ -13,16 +15,13 @@ public class ListingResponseDTO {
     private String website;
     private Boolean listingActive;
 
-    private Long categoryId;
-    private Long subCategoryId;
+    private Set<Long> categoryIds;
+    private Set<Long> subCategoryIds;
 
     public ListingResponseDTO() {
     }
 
-    public ListingResponseDTO(Long listingId, String listingTitle, String description, String address, String city,
-                              String contactNumber, String whatsappNumber, String email, String imageUrl,
-                              String website, Boolean listingActive,
-                              Long categoryId, Long subCategoryId) {
+    public ListingResponseDTO(Long listingId, String listingTitle, String description, String address, String city, String contactNumber, String whatsappNumber, String email, String imageUrl, String website, Boolean listingActive, Set<Long> categoryIds, Set<Long> subCategoryIds) {
         this.listingId = listingId;
         this.listingTitle = listingTitle;
         this.description = description;
@@ -34,8 +33,8 @@ public class ListingResponseDTO {
         this.imageUrl = imageUrl;
         this.website = website;
         this.listingActive = listingActive;
-        this.categoryId = categoryId;
-        this.subCategoryId = subCategoryId;
+        this.categoryIds = categoryIds;
+        this.subCategoryIds = subCategoryIds;
     }
 
     // Getters and Setters
@@ -128,19 +127,38 @@ public class ListingResponseDTO {
         this.listingActive = listingActive;
     }
 
-    public Long getCategoryId() {
-        return categoryId;
+    public Set<Long> getCategoryIds() {
+        return categoryIds;
     }
 
-    public void setCategoryId(Long categoryId) {
-        this.categoryId = categoryId;
+    public void setCategoryIds(Set<Long> categoryIds) {
+        this.categoryIds = categoryIds;
     }
 
-    public Long getSubCategoryId() {
-        return subCategoryId;
+    public Set<Long> getSubCategoryIds() {
+        return subCategoryIds;
     }
 
-    public void setSubCategoryId(Long subCategoryId) {
-        this.subCategoryId = subCategoryId;
+    public void setSubCategoryIds(Set<Long> subCategoryIds) {
+        this.subCategoryIds = subCategoryIds;
+    }
+
+    @Override
+    public String toString() {
+        return "ListingResponseDTO{" +
+                "listingId=" + listingId +
+                ", listingTitle='" + listingTitle + '\'' +
+                ", description='" + description + '\'' +
+                ", address='" + address + '\'' +
+                ", city='" + city + '\'' +
+                ", contactNumber='" + contactNumber + '\'' +
+                ", whatsappNumber='" + whatsappNumber + '\'' +
+                ", email='" + email + '\'' +
+                ", imageUrl='" + imageUrl + '\'' +
+                ", website='" + website + '\'' +
+                ", listingActive=" + listingActive +
+                ", categoryIds=" + categoryIds +
+                ", subCategoryIds=" + subCategoryIds +
+                '}';
     }
 }

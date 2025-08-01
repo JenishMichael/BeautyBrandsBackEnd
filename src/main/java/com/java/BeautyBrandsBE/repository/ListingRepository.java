@@ -13,29 +13,23 @@ import java.util.Optional;
 
 @Repository
 public interface ListingRepository extends JpaRepository<Listing, Long> {
-    // Find Category Obj By Listing Obj
-    Optional<Category> findByCategoryCategoryId(Long categoryId);
 
-    //Find SubCategory Obj By Listing Obj
-    List<SubCategory> findBySubCategorySubCategoryId(Long subCategoryId);
-
-    //Get All active in List
+    // Get All active listings
     List<Listing> findAllByListingActiveTrue();
 
-    // Get a listing by its ID (only if active)  //getListingByIdIfActive
+    // Get a listing by its ID (only if active)
     Optional<Listing> findByListingIdAndListingActiveTrue(Long id);
 
-    //Get List<Listings> based on subcategoryId
-    List<Listing> findBySubCategory_SubCategoryIdAndListingActiveTrue(Long subCategoryId);
+    // Get listings by category (many-to-many)
+    List<Listing> findByCategories_CategoryIdAndListingActiveTrue(Long categoryId);
 
-    //getActiveListingsByCategoryId
-    List<Listing> findByCategory_CategoryIdAndListingActiveTrue(Long categoryId);
+    // Get listings by subcategory (many-to-many)
+    List<Listing> findBySubCategories_SubCategoryIdAndListingActiveTrue(Long subCategoryId);
 
-
+    // Full-text search on listingTitle, description, city
     @Query("SELECT l FROM Listing l WHERE l.listingActive = true AND (" +
             "LOWER(l.listingTitle) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
             "LOWER(l.description) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
             "LOWER(l.city) LIKE LOWER(CONCAT('%', :keyword, '%')))")
     List<Listing> searchActiveListingsByKeyword(@Param("keyword") String keyword);
-
 }

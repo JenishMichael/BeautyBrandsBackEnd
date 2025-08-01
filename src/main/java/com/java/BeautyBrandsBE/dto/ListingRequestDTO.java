@@ -2,6 +2,8 @@ package com.java.BeautyBrandsBE.dto;
 
 import jakarta.validation.constraints.*;
 
+import java.util.Set;
+
 public class ListingRequestDTO {
 
 //    private String listingTitle;
@@ -15,8 +17,8 @@ public class ListingRequestDTO {
 //    private String website;
 //    private Boolean listingActive;
 //
-//    private Long categoryId;
-//    private Long subCategoryId;
+//    private Set categoryIds;
+//    private Set subCategoryIds;
 
     @NotBlank(message = "Listing title is required")
     @Size(max = 100, message = "Listing title must be at most 100 characters")
@@ -43,26 +45,25 @@ public class ListingRequestDTO {
     @Email(message = "Email should be valid")
     private String email;
 
-//    @NotBlank(message = "Image URL is required")
+//  @NotBlank(message = "Image URL is required")
     private String imageUrl;
 
     private String website; // Optional, no validation
 
-//    @NotNull(message = "Listing active status is required")
+//  @NotNull(message = "Listing active status is required")
     private Boolean listingActive = true;
 
-    @NotNull(message = "Category ID is required")
-    private Long categoryId;
+    @NotEmpty(message = "At least one category ID is required")
+    private Set<Long> categoryIds;
 
-    @NotNull(message = "SubCategory ID is required")
-    private Long subCategoryId;
+    @NotEmpty(message = "At least one subcategory ID is required")
+    private Set<Long> subCategoryIds;
+
 
     public ListingRequestDTO() {
     }
 
-    public ListingRequestDTO(String listingTitle, String description, String address, String city,
-                             String contactNumber, String whatsappNumber, String email, String imageUrl,
-                             String website, Boolean listingActive, Long categoryId, Long subCategoryId) {
+    public ListingRequestDTO(String listingTitle, String description, String address, String city, String contactNumber, String whatsappNumber, String email, String imageUrl, String website, Boolean listingActive, Set<Long> categoryIds, Set<Long> subCategoryIds) {
         this.listingTitle = listingTitle;
         this.description = description;
         this.address = address;
@@ -73,12 +74,11 @@ public class ListingRequestDTO {
         this.imageUrl = imageUrl;
         this.website = website;
         this.listingActive = listingActive;
-        this.categoryId = categoryId;
-        this.subCategoryId = subCategoryId;
+        this.categoryIds = categoryIds;
+        this.subCategoryIds = subCategoryIds;
     }
 
     // Getters and Setters
-
     public String getListingTitle() {
         return listingTitle;
     }
@@ -159,19 +159,38 @@ public class ListingRequestDTO {
         this.listingActive = listingActive;
     }
 
-    public Long getCategoryId() {
-        return categoryId;
+    public Set<Long> getCategoryIds() {
+        return categoryIds;
     }
 
-    public void setCategoryId(Long categoryId) {
-        this.categoryId = categoryId;
+    public void setCategoryIds(Set<Long> categoryIds) {
+        this.categoryIds = categoryIds;
     }
 
-    public Long getSubCategoryId() {
-        return subCategoryId;
+    public Set<Long> getSubCategoryIds() {
+        return subCategoryIds;
     }
 
-    public void setSubCategoryId(Long subCategoryId) {
-        this.subCategoryId = subCategoryId;
+    public void setSubCategoryIds(Set<Long> subCategoryIds) {
+        this.subCategoryIds = subCategoryIds;
+    }
+
+
+    @Override
+    public String toString() {
+        return "ListingRequestDTO{" +
+                "listingTitle='" + listingTitle + '\'' +
+                ", description='" + description + '\'' +
+                ", address='" + address + '\'' +
+                ", city='" + city + '\'' +
+                ", contactNumber='" + contactNumber + '\'' +
+                ", whatsappNumber='" + whatsappNumber + '\'' +
+                ", email='" + email + '\'' +
+                ", imageUrl='" + imageUrl + '\'' +
+                ", website='" + website + '\'' +
+                ", listingActive=" + listingActive +
+                ", categoryIds=" + categoryIds +
+                ", subCategoryIds=" + subCategoryIds +
+                '}';
     }
 }

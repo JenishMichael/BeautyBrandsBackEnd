@@ -4,6 +4,8 @@ package com.java.BeautyBrandsBE.model;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "listings")
@@ -33,20 +35,35 @@ public class Listing  {
 
     private Boolean listingActive = true;
 
+//    @ManyToOne
+//    @JoinColumn(name = "categoryId")
+//    private Category category;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "subCategoryId")
+//    private SubCategory subCategory;
 
-    @ManyToOne
-    @JoinColumn(name = "categoryId")
-    private Category category;
+    @ManyToMany
+    @JoinTable(
+            name = "listing_categories",
+            joinColumns = @JoinColumn(name = "listing_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id")
+    )
+    private Set<Category> categories = new HashSet<>();
 
-    @ManyToOne
-    @JoinColumn(name = "subCategoryId")
-    private SubCategory subCategory;
+    @ManyToMany
+    @JoinTable(
+            name = "listing_subcategories",
+            joinColumns = @JoinColumn(name = "listing_id"),
+            inverseJoinColumns = @JoinColumn(name = "sub_category_id")
+    )
+    private Set<SubCategory> subCategories = new HashSet<>();
+
 
     public Listing() {
     }
 
-
-    public Listing(Long listingId, String listingTitle, String description, String address, String city, String contactNumber, String whatsappNumber, String email, String imageUrl, String website, Boolean listingActive, Category category, SubCategory subCategory) {
+    public Listing(Long listingId, String listingTitle, String description, String address, String city, String contactNumber, String whatsappNumber, String email, String imageUrl, String website, Boolean listingActive, Set<Category> categories, Set<SubCategory> subCategories) {
         this.listingId = listingId;
         this.listingTitle = listingTitle;
         this.description = description;
@@ -58,9 +75,10 @@ public class Listing  {
         this.imageUrl = imageUrl;
         this.website = website;
         this.listingActive = listingActive;
-        this.category = category;
-        this.subCategory = subCategory;
+        this.categories = categories;
+        this.subCategories = subCategories;
     }
+
 
     public Long getListingId() {
         return listingId;
@@ -150,20 +168,20 @@ public class Listing  {
         this.listingActive = listingActive;
     }
 
-    public Category getCategory() {
-        return category;
+    public Set<Category> getCategories() {
+        return categories;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
     }
 
-    public SubCategory getSubCategory() {
-        return subCategory;
+    public Set<SubCategory> getSubCategories() {
+        return subCategories;
     }
 
-    public void setSubCategory(SubCategory subCategory) {
-        this.subCategory = subCategory;
+    public void setSubCategories(Set<SubCategory> subCategories) {
+        this.subCategories = subCategories;
     }
 
     @Override
@@ -180,8 +198,8 @@ public class Listing  {
                 ", imageUrl='" + imageUrl + '\'' +
                 ", website='" + website + '\'' +
                 ", listingActive=" + listingActive +
-                ", category=" + category +
-                ", subCategory=" + subCategory +
+                ", categories=" + categories +
+                ", subCategories=" + subCategories +
                 '}';
     }
 }

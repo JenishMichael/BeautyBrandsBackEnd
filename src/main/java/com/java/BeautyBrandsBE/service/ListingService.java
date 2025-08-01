@@ -25,6 +25,7 @@ public interface ListingService {
     // listing (mark as active)
     void reactivateListing(Long id);
 
+
     // Get listings by subcategory (optional, only if required)
     List<ListingResponseDTO> getActiveListingsBySubCategoryId(Long subCategoryId);
 
