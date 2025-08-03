@@ -10,6 +10,9 @@ import com.java.BeautyBrandsBE.model.SubCategory;
 import com.java.BeautyBrandsBE.repository.CategoryRepository;
 import com.java.BeautyBrandsBE.repository.ListingRepository;
 import com.java.BeautyBrandsBE.repository.SubCategoryRepository;
+import jakarta.transaction.Transactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +31,12 @@ public class ListingServiceImpl implements ListingService {
     @Autowired
     private SubCategoryRepository subCategoryRepository;
 
+    @Autowired
+    private EmailService emailService;
+
+    private static final Logger log = LoggerFactory.getLogger(ListingServiceImpl.class);
+
+    @Transactional
     @Override
     public ListingResponseDTO createListing(ListingRequestDTO dto) {
         // 1. Validate and fetch categories
@@ -94,12 +103,17 @@ public class ListingServiceImpl implements ListingService {
             );
         }
 
-
         // 4. Save Listing
         Listing listing = ListingMapper.toEntity(dto, categories, subCategories);
-        Listing saved = listingRepository.save(listing);
+        ListingResponseDTO saved = ListingMapper.toResponseDTO(listingRepository.save(listing));
 
-        return ListingMapper.toResponseDTO(saved);
+        //5.Send Email
+        try {
+            emailService.sendEmailToAdmin(saved);
+        } catch (Exception e) {
+            log.error("Email sending failed for listing ID {}: {}", saved.getListingId(), e.getMessage());
+        }
+        return saved;
     }
 
 
