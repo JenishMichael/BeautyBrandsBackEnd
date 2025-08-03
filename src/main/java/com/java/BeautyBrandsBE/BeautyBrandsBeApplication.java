@@ -10,7 +10,6 @@ import org.springframework.scheduling.annotation.EnableAsync;
 public class BeautyBrandsBeApplication {
 
 	public static void main(String[] args) {
-
 //		//	For Local Development
 //		Dotenv dotenv = Dotenv.load();
 //		System.setProperty("DB_URL", dotenv.get("DB_URL"));
